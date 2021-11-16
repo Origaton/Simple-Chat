@@ -1,7 +1,6 @@
 package com.example.application
 
 import android.content.Intent
-import android.icu.util.TimeUnit.values
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -16,13 +15,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import java.time.chrono.JapaneseEra.values
 
 class SingInActivity : AppCompatActivity() {
 
-    lateinit var launcher: ActivityResultLauncher<Intent>
-    lateinit var auth: FirebaseAuth
-    lateinit var bindingClass: ActivitySingInBinding
+    private lateinit var launcher: ActivityResultLauncher<Intent>
+    private lateinit var auth: FirebaseAuth
+    private lateinit var bindingClass: ActivitySingInBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +39,7 @@ class SingInActivity : AppCompatActivity() {
             }
         }
         buttonListener()
+        checkAuth()
     }
 
     private fun getClient(): GoogleSignInClient {
@@ -63,6 +62,7 @@ class SingInActivity : AppCompatActivity() {
             if (it.isSuccessful) {
                 Toast.makeText(applicationContext, "Google sign is successes", Toast.LENGTH_SHORT)
                     .show()
+                checkAuth()
             } else {
                 Toast.makeText(applicationContext, "Google sign is canceled", Toast.LENGTH_SHORT)
                     .show()
@@ -73,6 +73,13 @@ class SingInActivity : AppCompatActivity() {
     private fun buttonListener() {
         bindingClass.bSingIn.setOnClickListener {
             singInWithGoogle()
+        }
+    }
+
+    private fun checkAuth() {
+        if(auth.currentUser != null) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }
     }
 }

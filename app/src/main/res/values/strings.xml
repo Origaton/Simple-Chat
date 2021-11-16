@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Application</string>
+    <string name="app_name">Simple chat</string>
     <string name="send">Send</string>
     <string name="massage">Massage</string>
     <string name="sing_in_google">Sing in with Google</string>
